@@ -1,0 +1,37 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圆角方块 -->
+  <rect x="16" y="16" width="224" height="224" rx="48" fill="#ECFDF3"/>
+  
+  <!-- 日历主体 -->
+  <rect x="40" y="52" width="176" height="164" rx="24" fill="white" stroke="#D1D5DB" stroke-width="4"/>
+  
+  <!-- 日历顶部条 -->
+  <rect x="40" y="52" width="176" height="44" rx="24" fill="#10B981"/>
+
+  <!-- 顶部两个“装订环” -->
+  <rect x="82" y="32" width="20" height="30" rx="10" fill="white"/>
+  <rect x="154" y="32" width="20" height="30" rx="10" fill="white"/>
+
+  <!-- 左侧 3x3 热力小格 -->
+  <!-- 行 1 -->
+  <rect x="56" y="112" width="26" height="26" rx="6" fill="#E5E7EB"/>
+  <rect x="88" y="112" width="26" height="26" rx="6" fill="#DCFCE7"/>
+  <rect x="120" y="112" width="26" height="26" rx="6" fill="#BBF7D0"/>
+  <!-- 行 2 -->
+  <rect x="56" y="146" width="26" height="26" rx="6" fill="#E5E7EB"/>
+  <rect x="88" y="146" width="26" height="26" rx="6" fill="#BBF7D0"/>
+  <rect x="120" y="146" width="26" height="26" rx="6" fill="#22C55E"/>
+  <!-- 行 3 -->
+  <rect x="56" y="180" width="26" height="26" rx="6" fill="#E5E7EB"/>
+  <rect x="88" y="180" width="26" height="26" rx="6" fill="#E5E7EB"/>
+  <rect x="120" y="180" width="26" height="26" rx="6" fill="#BBF7D0"/>
+
+  <!-- 右侧日期数字（简化） -->
+  <text x="176" y="152" text-anchor="middle" fill="#111827" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="40" font-weight="700">
+    24
+  </text>
+
+  <!-- 右下角对勾圆圈 -->
+  <circle cx="188" cy="188" r="30" fill="#10B981" />
+  <path d="M176 188 L184 196 L200 180" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
