@@ -1,0 +1,4 @@
+# CloudBase Static Hosting Redirects for Vue Router
+# This file ensures all routes are handled by index.html for SPA routing
+
+/*    /index.html   200

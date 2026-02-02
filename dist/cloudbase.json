@@ -1,0 +1,19 @@
+{
+  "version": "2.0",
+  "framework": {
+    "name": "vue",
+    "version": "3"
+  },
+  "hosting": {
+    "static": {
+      "index": "index.html",
+      "error": "index.html",
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  }
+}
