@@ -33,7 +33,8 @@ export const useHabitsStore = defineStore('habits', () => {
       
       habits.value = Array.from(habitMap.values())
     } catch (error) {
-      console.error('加载习惯失败:', error)
+      const errorMessage = error?.message || error?.response?.data?.message || '加载习惯失败'
+      console.error('加载习惯失败:', errorMessage, error)
       throw error
     } finally {
       loading.value = false
@@ -45,7 +46,8 @@ export const useHabitsStore = defineStore('habits', () => {
       await apiService.toggleRecord(habitId, date)
       await loadHabits()
     } catch (error) {
-      console.error('切换打卡状态失败:', error)
+      const errorMessage = error?.message || error?.response?.data?.message || '切换打卡状态失败'
+      console.error('切换打卡状态失败:', errorMessage, error)
       throw error
     }
   }
@@ -60,7 +62,8 @@ export const useHabitsStore = defineStore('habits', () => {
       })
       await loadHabits()
     } catch (error) {
-      console.error('添加习惯失败:', error)
+      const errorMessage = error?.message || error?.response?.data?.message || '添加习惯失败'
+      console.error('添加习惯失败:', errorMessage, error)
       throw error
     }
   }
@@ -70,7 +73,8 @@ export const useHabitsStore = defineStore('habits', () => {
       await apiService.updateHabit(habitId, updates)
       await loadHabits()
     } catch (error) {
-      console.error('更新习惯失败:', error)
+      const errorMessage = error?.message || error?.response?.data?.message || '更新习惯失败'
+      console.error('更新习惯失败:', errorMessage, error)
       throw error
     }
   }
@@ -80,7 +84,8 @@ export const useHabitsStore = defineStore('habits', () => {
       await apiService.deleteHabit(habitId)
       habits.value = habits.value.filter(h => h.id !== habitId)
     } catch (error) {
-      console.error('删除习惯失败:', error)
+      const errorMessage = error?.message || error?.response?.data?.message || '删除习惯失败'
+      console.error('删除习惯失败:', errorMessage, error)
       throw error
     }
   }
@@ -93,7 +98,8 @@ export const useHabitsStore = defineStore('habits', () => {
         await loadHabits()
       }
     } catch (error) {
-      console.error('归档/取消归档失败:', error)
+      const errorMessage = error?.message || error?.response?.data?.message || '归档/取消归档失败'
+      console.error('归档/取消归档失败:', errorMessage, error)
       throw error
     }
   }

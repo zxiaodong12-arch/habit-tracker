@@ -137,7 +137,8 @@ const handleSubmit = async () => {
       }
     }
   } catch (error) {
-    console.error('操作失败:', error)
+    const errorMessage = error?.message || error?.response?.data?.message || '操作失败'
+    console.error('操作失败:', errorMessage, error)
   } finally {
     loading.value = false
   }

@@ -131,7 +131,8 @@ onMounted(async () => {
   try {
     await habitsStore.loadHabits()
   } catch (error) {
-    console.error('加载习惯失败:', error)
+    const errorMessage = error?.message || error?.response?.data?.message || '加载习惯失败'
+    console.error('加载习惯失败:', errorMessage, error)
   }
 })
 
@@ -139,7 +140,8 @@ const handleToggle = async (habitId) => {
   try {
     await habitsStore.toggleHabit(habitId, getTodayString())
   } catch (error) {
-    console.error('切换打卡状态失败:', error)
+    const errorMessage = error?.message || error?.response?.data?.message || '切换打卡状态失败'
+    console.error('切换打卡状态失败:', errorMessage, error)
   }
 }
 
@@ -163,7 +165,8 @@ const handleHabitSubmit = async (formData) => {
     }
     closeModal()
   } catch (error) {
-    console.error('保存习惯失败:', error)
+    const errorMessage = error?.message || error?.response?.data?.message || '保存习惯失败'
+    console.error('保存习惯失败:', errorMessage, error)
   }
 }
 

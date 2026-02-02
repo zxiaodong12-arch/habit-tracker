@@ -2,7 +2,22 @@ import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
 
 // 支持环境变量配置，开发环境使用默认值
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://habit-tracker.com:8080/api'
+// 根据当前页面协议自动选择 HTTP/HTTPS，避免混合内容错误
+const getApiBaseURL = () => {
+  // 如果设置了环境变量，直接使用
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL
+  }
+  
+  // 根据当前页面协议自动选择
+  const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:'
+  const apiHost = '1.15.12.78'
+  const apiPath = '/api'
+  
+  return `${protocol}//${apiHost}${apiPath}`
+}
+
+const baseURL = getApiBaseURL()
 
 const api = axios.create({
   baseURL,
@@ -37,7 +52,16 @@ api.interceptors.response.use(
       }
     }
     // 返回格式化的错误信息
-    const errorMessage = error.response?.data?.message || error.message || '请求失败'
+    let errorMessage = '请求失败'
+    if (error.response?.data?.message) {
+      errorMessage = typeof error.response.data.message === 'string' 
+        ? error.response.data.message 
+        : JSON.stringify(error.response.data.message)
+    } else if (error.message) {
+      errorMessage = typeof error.message === 'string' 
+        ? error.message 
+        : String(error.message)
+    }
     return Promise.reject(new Error(errorMessage))
   }
 )

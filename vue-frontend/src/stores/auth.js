@@ -52,7 +52,8 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       await apiService.logout()
     } catch (error) {
-      console.error('登出失败:', error)
+      const errorMessage = error?.message || error?.response?.data?.message || '登出失败'
+      console.error('登出失败:', errorMessage, error)
     } finally {
       clearAuth()
     }
