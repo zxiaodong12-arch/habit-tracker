@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 const routes = [
@@ -17,7 +17,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(), // 使用 Hash 模式，避免 CloudBase 重定向循环问题
+  // 使用 History 模式，Vercel/Netlify 等平台支持自动路由
+  history: import.meta.env.PROD ? createWebHistory() : createWebHashHistory(),
   routes
 })
 

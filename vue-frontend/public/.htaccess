@@ -1,0 +1,18 @@
+# Apache 配置（如果 CloudBase 支持）
+# 确保 HTML 文件使用正确的 Content-Type
+
+<IfModule mod_mime.c>
+    AddType text/html .html
+    AddType application/javascript .js
+    AddType text/css .css
+</IfModule>
+
+# 如果文件不存在，重定向到 index.html（用于 Vue Router）
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteRule ^index\.html$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.html [L]
+</IfModule>

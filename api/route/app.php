@@ -8,6 +8,14 @@ Route::group('api', function () {
     // 健康检查路由
     Route::get('api/health', 'Health/index');
 
+    // 认证相关路由
+    Route::group('auth', function () {
+        Route::post('register', 'Auth/register');
+        Route::post('login', 'Auth/login');
+        Route::post('logout', 'Auth/logout');
+        Route::get('me', 'Auth/me');
+    });
+
     // 习惯管理
     Route::group('habits', function () {
         Route::get('', 'Habits/index');

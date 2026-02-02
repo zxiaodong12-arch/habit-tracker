@@ -1,0 +1,60 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: vue-frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./vue-frontend
+        run: npm ci
+
+      - name: Build
+        working-directory: ./vue-frontend
+        env:
+          # API 地址配置（可选，在 GitHub Secrets 中设置 VITE_API_BASE_URL）
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL || 'https://your-api-domain.com/api' }}
+          # Base 路径配置（如果仓库名不是 username.github.io，需要设置）
+          # 例如：如果仓库名是 habit-tracker，设置为 /habit-tracker/
+          VITE_BASE_PATH: ${{ secrets.VITE_BASE_PATH || './' }}
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
