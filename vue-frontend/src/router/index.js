@@ -16,13 +16,11 @@ const routes = [
     }
 ]
 
-// 获取base路径，默认为'/'
-const base = import.meta.env.BASE_URL || '/'
-
 const router = createRouter({
-    // 始终使用Hash模式，兼容所有静态托管服务
-    history: createWebHashHistory(base),
-    routes
+  // 使用 Hash 模式，适配 GitHub Pages 子路径部署
+  // Hash 模式不需要 base 参数，会自动处理
+  history: createWebHashHistory(),
+  routes
 })
 
 // 路由守卫

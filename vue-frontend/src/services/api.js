@@ -17,9 +17,8 @@ const getApiBaseURL = () => {
     return `${protocol}//${apiHost}${apiPath}`
 }
 
-// const baseURL = getApiBaseURL()
-// 如果设置了环境变量，直接使用；否则使用 HTTP（最简单）
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'http://1.15.12.78/api'
+// 如果设置了环境变量，直接使用；否则根据页面协议自动选择（避免混合内容错误）
+const baseURL = import.meta.env.VITE_API_BASE_URL || getApiBaseURL()
 
 const api = axios.create({
     baseURL,
@@ -48,9 +47,9 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             const authStore = useAuthStore()
             authStore.clearAuth()
-            // 使用 window.location 而不是 router，因为 router 可能还未初始化
-            if (window.location.pathname !== '/login') {
-                window.location.href = '/login'
+            // 使用 hash 路由跳转（适配 GitHub Pages）
+            if (!window.location.hash.includes('#/login')) {
+                window.location.hash = '#/login'
             }
         }
         // 返回格式化的错误信息
