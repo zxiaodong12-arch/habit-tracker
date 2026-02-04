@@ -16,7 +16,7 @@ class Habits extends BaseController
     {
         try {
             // 从 token 获取用户ID，如果没有则从参数获取（兼容旧代码）
-            $userId = $request->userId ?? $request->param('user_id');
+            $userId = $this->getUserIdFromToken($request) ?? $request->param('user_id');
             $archived = $request->param('archived');
 
             $where = [];
@@ -88,7 +88,15 @@ class Habits extends BaseController
             }
 
             // 从 token 获取用户ID，如果没有则从参数获取（兼容旧代码）
-            $userId = $request->userId ?? $data['user_id'] ?? null;
+            $userId = $this->getUserIdFromToken($request) ?? $data['user_id'] ?? null;
+
+            // 如果仍然没有 userId，返回未登录错误，避免写入 null
+            if ($userId === null) {
+                return json([
+                    'success' => false,
+                    'message' => '未登录或 token 无效，无法创建习惯'
+                ], 401);
+            }
 
             $habit = new HabitModel();
             $habit->user_id = $userId;
@@ -108,6 +116,55 @@ class Habits extends BaseController
                 'message' => '创建习惯失败',
                 'error' => config('app.app_debug') ? $e->getMessage() : null
             ], 500);
+        }
+    }
+
+    /**
+     * 从 token 获取用户ID（与 Auth 控制器中的实现保持一致）
+     */
+    private function getUserIdFromToken(Request $request)
+    {
+        // 从请求头获取 token
+        $token = $request->header('Authorization');
+        if ($token) {
+            // 移除 "Bearer " 前缀（如果存在）
+            $token = str_replace('Bearer ', '', $token);
+        } else {
+            // 尝试从请求参数获取
+            $token = $request->param('token');
+        }
+
+        if (!$token) {
+            return null;
+        }
+
+        try {
+            // 解码 token
+            $decoded = base64_decode($token);
+            $parts = explode(':', $decoded);
+
+            if (count($parts) !== 3) {
+                return null;
+            }
+
+            $userId = $parts[0];
+            $timestamp = $parts[1];
+            $hash = $parts[2];
+
+            // 验证 token（简单验证，生产环境需要更严格的验证）
+            $expectedHash = md5($userId . $timestamp . 'habit-tracker-secret-key');
+            if ($hash !== $expectedHash) {
+                return null;
+            }
+
+            // 检查 token 是否过期（7天）
+            if (time() - $timestamp > 7 * 24 * 60 * 60) {
+                return null;
+            }
+
+            return (int)$userId;
+        } catch (\Exception $e) {
+            return null;
         }
     }
 
