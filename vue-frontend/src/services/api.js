@@ -3,10 +3,11 @@ import {useAuthStore} from '@/stores/auth'
 
 // 支持环境变量配置，开发环境使用默认值
 // 本地开发通过 Vite 代理走相对路径 /api，避免浏览器 CORS 问题
-// 本地开发：统一走相对路径 /api，由 Vite 代理到本地或远程后端
-// 这样浏览器认为是同源请求，不会触发 CORS 校验
-// 先不考虑环境变量，等线上稳定后再单独加
-const baseURL = '/api'
+// 优先从环境变量读取 API 地址：
+//  - 本地开发：可以在 .env.local 里配置 VITE_API_BASE_URL=http://127.0.0.1:8000/api
+//  - 线上构建：在 GitHub Pages / 服务器上配置对应域名，例如：https://legoapi.cn/api
+// 如果没有配置环境变量，则回退到相对路径 /api（配合 Vite 代理使用）
+const baseURL = import.meta.env.VITE_API_BASE_URL || '/api'
 
 const api = axios.create({
     baseURL,
