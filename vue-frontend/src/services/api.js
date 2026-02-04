@@ -11,7 +11,7 @@ const getApiBaseURL = () => {
 
     // 根据当前页面协议自动选择
     const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:'
-    const apiHost = '1.15.12.78'
+    const apiHost = 'legoapi.cn'  // 使用域名而不是 IP，避免 SSL 证书不匹配
     const apiPath = '/api'
 
     return `${protocol}//${apiHost}${apiPath}`
