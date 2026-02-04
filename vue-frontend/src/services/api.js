@@ -2,23 +2,11 @@ import axios from 'axios'
 import {useAuthStore} from '@/stores/auth'
 
 // 支持环境变量配置，开发环境使用默认值
-// 根据当前页面协议自动选择 HTTP/HTTPS，避免混合内容错误
-const getApiBaseURL = () => {
-    // 如果设置了环境变量，直接使用
-    if (import.meta.env.VITE_API_BASE_URL) {
-        return import.meta.env.VITE_API_BASE_URL
-    }
-
-    // 根据当前页面协议自动选择
-    const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:'
-    const apiHost = 'legoapi.cn'  // 使用域名而不是 IP，避免 SSL 证书不匹配
-    const apiPath = '/api'
-
-    return `${protocol}//${apiHost}${apiPath}`
-}
-
-// 如果设置了环境变量，直接使用；否则根据页面协议自动选择（避免混合内容错误）
-const baseURL = import.meta.env.VITE_API_BASE_URL || getApiBaseURL()
+// 本地开发通过 Vite 代理走相对路径 /api，避免浏览器 CORS 问题
+// 本地开发：统一走相对路径 /api，由 Vite 代理到本地或远程后端
+// 这样浏览器认为是同源请求，不会触发 CORS 校验
+// 先不考虑环境变量，等线上稳定后再单独加
+const baseURL = '/api'
 
 const api = axios.create({
     baseURL,

@@ -30,14 +30,11 @@
         <div class="form-group">
           <label for="habit-color">颜色</label>
           <div class="color-picker">
-            <div 
-              v-for="color in colors" 
-              :key="color"
-              class="color-option" 
-              :class="{ active: form.color === color }"
-              :style="{ background: color }"
-              @click="form.color = color"
-            ></div>
+            <input
+              id="habit-color"
+              type="color"
+              v-model="form.color"
+            />
           </div>
         </div>
         <div class="form-actions">
