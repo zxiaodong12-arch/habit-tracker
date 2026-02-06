@@ -41,6 +41,14 @@
           <button type="submit" class="btn btn-primary">
             {{ editingHabit ? '保存' : '添加' }}
           </button>
+          <button
+            v-if="editingHabit"
+            type="button"
+            class="btn btn-secondary"
+            @click="handleArchive"
+          >
+            {{ editingHabit.archived ? '取消归档' : '归档' }}
+          </button>
           <button type="button" class="btn btn-secondary" @click="close">取消</button>
         </div>
       </form>
@@ -56,7 +64,7 @@ const props = defineProps({
   editingHabit: Object
 })
 
-const emit = defineEmits(['close', 'submit'])
+const emit = defineEmits(['close', 'submit', 'archive'])
 
 const colors = [
   '#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', 
@@ -92,6 +100,10 @@ const close = () => {
 const handleSubmit = () => {
   emit('submit', { ...form.value })
   close()
+}
+
+const handleArchive = () => {
+  emit('archive')
 }
 </script>
 

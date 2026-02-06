@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="heatmap-preview">
-      <div class="heatmap-preview-title">最近8周</div>
+      <div class="heatmap-preview-title">最近30天</div>
       <div class="heatmap-grid">
         <div 
           v-for="(record, index) in recentRecords" 
@@ -55,7 +55,7 @@ const emit = defineEmits(['toggle', 'click'])
 
 const isCompleted = computed(() => isCompletedToday(props.habit))
 const streak = computed(() => calculateStreak(props.habit))
-const recentRecords = computed(() => getRecentRecords(props.habit, 56))
+const recentRecords = computed(() => getRecentRecords(props.habit, 30))
 
 const handleToggle = () => {
   emit('toggle', props.habit.id)

@@ -103,6 +103,7 @@
       :editing-habit="editingHabit"
       @close="closeModal"
       @submit="handleHabitSubmit"
+      @archive="handleArchive"
     />
   </div>
 </template>
@@ -167,6 +168,17 @@ const handleHabitSubmit = async (formData) => {
   } catch (error) {
     const errorMessage = error?.message || error?.response?.data?.message || '保存习惯失败'
     console.error('保存习惯失败:', errorMessage, error)
+  }
+}
+
+const handleArchive = async () => {
+  if (!editingHabit.value) return
+  try {
+    await habitsStore.toggleArchiveHabit(editingHabit.value.id)
+    closeModal()
+  } catch (error) {
+    const errorMessage = error?.message || error?.response?.data?.message || '归档操作失败'
+    console.error('归档操作失败:', errorMessage, error)
   }
 }
 
