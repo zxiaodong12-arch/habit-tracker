@@ -31,6 +31,8 @@ Route::group('api', function () {
     // 习惯管理
     Route::group('habits', function () {
         Route::get('', 'Habits/index');
+        // 更具体的路由要放在前面，避免被 :id 匹配
+        Route::get(':id/detail', 'Habits/detail');
         Route::get(':id', 'Habits/read');
         Route::post('', 'Habits/save');
         Route::put(':id', 'Habits/update');

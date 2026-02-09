@@ -10,14 +10,17 @@ class Habit extends Model
 
     // 设置字段信息
     protected $schema = [
-        'id'          => 'int',
-        'user_id'     => 'int',
-        'name'        => 'string',
-        'emoji'       => 'string',
-        'color'       => 'string',
-        'archived'    => 'int',
-        'created_at'  => 'datetime',
-        'updated_at'  => 'datetime',
+        'id'               => 'int',
+        'user_id'         => 'int',
+        'name'            => 'string',
+        'emoji'           => 'string',
+        'color'           => 'string',
+        'archived'        => 'int',
+        'target_type'     => 'string',
+        'target_count'    => 'int',
+        'target_start_date' => 'date',
+        'created_at'      => 'datetime',
+        'updated_at'      => 'datetime',
     ];
 
     // 自动时间戳
@@ -25,9 +28,11 @@ class Habit extends Model
 
     // 类型转换
     protected $type = [
-        'id'          => 'integer',
-        'user_id'     => 'integer',
-        'archived'    => 'integer',
+        'id'               => 'integer',
+        'user_id'          => 'integer',
+        'archived'         => 'integer',
+        'target_count'     => 'integer',
+        'target_start_date' => 'date',
     ];
 
     // 关联：打卡记录
