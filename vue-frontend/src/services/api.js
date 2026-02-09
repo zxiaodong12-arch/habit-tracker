@@ -86,12 +86,25 @@ const apiService = {
         return response.data
     },
 
+    async getHabitDetail(id) {
+        const response = await api.get(`/habits/${id}/detail`)
+        // 响应拦截器已经返回了 response.data，这里 response 就是 { success, data }
+        // 如果成功，直接返回 data 部分
+        if (response.success && response.data) {
+            return response.data
+        }
+        return response
+    },
+
     async createHabit(habit) {
         const response = await api.post('/habits', {
             name: habit.name,
             emoji: habit.emoji || '📝',
             color: habit.color || '#10b981',
-            archived: habit.archived || false
+            archived: habit.archived || false,
+            target_type: habit.target_type || 'daily',
+            target_count: habit.target_count || 1,
+            target_start_date: habit.target_start_date || new Date().toISOString().split('T')[0]
         })
         return response.data
     },
@@ -154,7 +167,10 @@ const apiService = {
             color: apiHabit.color || '#10b981',
             records: recordsObj,
             archived: apiHabit.archived === 1,
-            createdAt: apiHabit.created_at
+            createdAt: apiHabit.created_at,
+            target_type: apiHabit.target_type || 'daily',
+            target_count: apiHabit.target_count || 1,
+            target_start_date: apiHabit.target_start_date
         }
     }
 }

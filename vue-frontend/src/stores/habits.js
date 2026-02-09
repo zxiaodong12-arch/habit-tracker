@@ -52,13 +52,16 @@ export const useHabitsStore = defineStore('habits', () => {
     }
   }
   
-  async function addHabit(name, emoji, color) {
+  async function addHabit(name, emoji, color, targetType = 'daily', targetCount = 1, targetStartDate = null) {
     try {
       await apiService.createHabit({
         name: name.trim(),
         emoji: emoji || '📝',
         color: color || '#10b981',
-        archived: false
+        archived: false,
+        target_type: targetType,
+        target_count: targetCount,
+        target_start_date: targetStartDate || new Date().toISOString().split('T')[0]
       })
       await loadHabits()
     } catch (error) {

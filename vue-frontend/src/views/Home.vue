@@ -54,6 +54,7 @@
             v-for="habit in habitsStore.activeHabits"
             :key="habit.id"
             :habit="habit"
+            :target-progress="getTargetProgress(habit)"
             @toggle="handleToggle"
             @click="handleHabitClick"
           />
@@ -147,8 +148,7 @@ const handleToggle = async (habitId) => {
 }
 
 const handleHabitClick = (habitId) => {
-  editingHabit.value = habitsStore.habits.find(h => h.id === habitId)
-  showEditModal.value = true
+  router.push(`/habit/${habitId}`)
 }
 
 const closeModal = () => {
@@ -162,7 +162,14 @@ const handleHabitSubmit = async (formData) => {
     if (editingHabit.value) {
       await habitsStore.updateHabit(editingHabit.value.id, formData)
     } else {
-      await habitsStore.addHabit(formData.name, formData.emoji, formData.color)
+      await habitsStore.addHabit(
+        formData.name, 
+        formData.emoji, 
+        formData.color,
+        formData.target_type || 'daily',
+        formData.target_count || 1,
+        formData.target_start_date
+      )
     }
     closeModal()
   } catch (error) {
@@ -185,6 +192,18 @@ const handleArchive = async () => {
 const handleLogout = async () => {
   await authStore.logout()
   router.push('/login')
+}
+
+// 计算目标进度（简化版，实际应该从API获取）
+const getTargetProgress = (habit) => {
+  if (!habit.target_type || !habit.target_count) {
+    return null
+  }
+  
+  // 这里简化处理，实际应该调用API获取准确的进度
+  // 暂时返回null，让卡片不显示进度
+  // 完整实现需要在 loadHabits 时调用详情API获取进度
+  return null
 }
 </script>
 

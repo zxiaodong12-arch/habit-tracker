@@ -13,6 +13,12 @@ const routes = [
     name: 'login',
     component: () => import('@/views/Login.vue'),
     meta: { requiresAuth: false }
+  },
+  {
+    path: '/habit/:id',
+    name: 'habit-detail',
+    component: () => import('@/views/HabitDetail.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 

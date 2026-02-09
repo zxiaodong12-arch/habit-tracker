@@ -103,6 +103,39 @@ export function getRecentRecords(habit, days = 365) {
   return result
 }
 
+// 计算单个习惯的历史最长连续天数
+export function calculateLongestStreakFromRecords(habit) {
+  const records = habit.records || {}
+  const completedDates = Object.keys(records)
+    .filter(date => records[date] === true)
+    .sort()
+
+  if (completedDates.length === 0) {
+    return 0
+  }
+
+  let longest = 1
+  let current = 1
+  const msPerDay = 1000 * 60 * 60 * 24
+
+  for (let i = 1; i < completedDates.length; i++) {
+    const prev = new Date(completedDates[i - 1])
+    const curr = new Date(completedDates[i])
+    prev.setHours(0, 0, 0, 0)
+    curr.setHours(0, 0, 0, 0)
+    const diffDays = Math.round((curr - prev) / msPerDay)
+
+    if (diffDays === 1) {
+      current++
+    } else {
+      longest = Math.max(longest, current)
+      current = 1
+    }
+  }
+
+  return Math.max(longest, current)
+}
+
 export function calculateStats(habits) {
   const activeHabits = habits.filter(h => !h.archived)
   const today = getTodayString()
@@ -111,14 +144,24 @@ export function calculateStats(habits) {
   const todayTotal = activeHabits.length
   const todayRate = todayTotal > 0 ? Math.round((todayCompleted / todayTotal) * 100) : 0
   
-  const longestStreak = activeHabits.length > 0
-    ? Math.max(...activeHabits.map(h => calculateStreak(h)))
-    : 0
+  // 所有习惯中「单个习惯」历史最长连续天数及对应习惯名称
+  let longestStreak = 0
+  let longestStreakHabitName = ''
+  if (activeHabits.length > 0) {
+    activeHabits.forEach(habit => {
+      const streak = calculateLongestStreakFromRecords(habit)
+      if (streak > longestStreak) {
+        longestStreak = streak
+        longestStreakHabitName = habit.name || ''
+      }
+    })
+  }
   
   return {
     todayCompleted,
     todayTotal,
     todayRate,
-    longestStreak
+    longestStreak,
+    longestStreakHabitName
   }
 }
