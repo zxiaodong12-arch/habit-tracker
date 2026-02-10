@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+
+# Node
+**/node_modules/
+
+# Build outputs
+dist/
+
+# Local env
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Database dumps
+*.sql

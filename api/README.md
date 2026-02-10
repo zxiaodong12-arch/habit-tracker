@@ -77,6 +77,43 @@ server {
 }
 ```
 
+#### CORS（跨域）配置建议
+
+当前后端路由开启了 `allowCrossDomain()`。如果你在 Nginx 层也加了 CORS 头，需要避免响应里出现重复的 `Access-Control-*`，否则浏览器会判定 CORS 失败。
+
+推荐做法：在 Nginx 添加 CORS，并隐藏后端返回的同名头（保留一套即可）。
+
+```nginx
+# CORS
+set $cors_origin "";
+if ($http_origin ~* ^https://your-frontend-domain\.com$) {
+    set $cors_origin $http_origin;
+}
+
+add_header 'Access-Control-Allow-Origin' $cors_origin always;
+add_header 'Access-Control-Allow-Credentials' 'true' always;
+add_header 'Access-Control-Allow-Methods' 'GET,POST,PUT,PATCH,DELETE,OPTIONS' always;
+add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type,Accept,Origin,X-Requested-With' always;
+
+if ($request_method = OPTIONS) {
+    return 204;
+}
+
+location ~ \.php$ {
+    fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+
+    # 隐藏后端 CORS 头，避免重复
+    fastcgi_hide_header Access-Control-Allow-Origin;
+    fastcgi_hide_header Access-Control-Allow-Credentials;
+    fastcgi_hide_header Access-Control-Allow-Methods;
+    fastcgi_hide_header Access-Control-Allow-Headers;
+    fastcgi_hide_header Access-Control-Max-Age;
+}
+```
+
 ### 6. 测试 API
 
 访问健康检查接口：
