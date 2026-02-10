@@ -86,9 +86,15 @@ npm run preview
 
 ## API 配置
 
-默认 API 地址为 `http://habit-tracker.com:8080/api`
+前端通过 `VITE_API_BASE_URL` 指定后端地址，未设置时默认使用 `/api`（配合本地代理）。
 
-如需修改，请编辑 `src/services/api.js` 中的 `baseURL`
+生产构建默认使用：
+
+```
+VITE_API_BASE_URL=https://api.legoapi.cn/api
+```
+
+如需修改，请在 `vue-frontend` 下新增或覆盖对应环境的 `.env.*` 文件。
 
 ## 开发说明
 
