@@ -82,19 +82,25 @@
           ></div>
         </div>
         <div 
-          v-if="!isTargetCompleted && targetProgress.remaining_days > 0" 
-          class="target-remaining"
-        >
-          还剩 {{ targetProgress.remaining_days }} 天完成目标
-        </div>
-        <div 
-          v-else 
+          v-if="isTargetCompleted"
           class="target-remaining"
         >
           本周期目标已完成
           <span v-if="targetProgress.completed > targetProgress.target_count">
             ，已超出 {{ targetProgress.completed - targetProgress.target_count }} 次
           </span>
+        </div>
+        <div 
+          v-else-if="targetProgress.remaining_days > 0" 
+          class="target-remaining"
+        >
+          还剩 {{ targetProgress.remaining_days }} 天完成目标
+        </div>
+        <div 
+          v-else
+          class="target-remaining"
+        >
+          {{ getTargetPeriodPrefix() }}目标未完成
         </div>
         </div>
       </section>
