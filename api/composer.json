@@ -1,22 +1,25 @@
 {
-    "name": "habit-tracker/api",
-    "description": "习惯追踪器 ThinkPHP API",
-    "type": "project",
-    "keywords": ["thinkphp", "api", "habit", "tracker"],
-    "license": "MIT",
-    "require": {
-        "php": ">=7.2.5",
-        "topthink/framework": "^6.1.0",
-        "topthink/think-orm": "^2.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "app\\": "app/"
-        }
-    },
-    "config": {
-        "preferred-install": "composer",
-        "optimize-autoloader": true,
-        "sort-packages": true
+  "name": "habit-tracker/api",
+  "description": "习惯追踪器 ThinkPHP API",
+  "type": "project",
+  "keywords": ["thinkphp", "api", "habit", "tracker"],
+  "license": "MIT",
+  "require": {
+    "php": ">=8.0.0",
+    "topthink/framework": "^8.0",
+    "topthink/think-orm": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "app\\": "app/"
     }
+  },
+  "config": {
+    "preferred-install": "composer",
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "audit": {
+      "ignore": ["PKSA-wpgp-v5cy-4kds", "PKSA-qzw1-yq5b-y8j5"]
+    }
+  }
 }
