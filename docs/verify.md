@@ -22,7 +22,7 @@ curl --socks5-hostname 127.0.0.1:1081 https://api.legoapi.cn/health
 
 ```bash
 curl -i -X OPTIONS \
-  -H "Origin: https://lego-87-3galps7s9490f422-1399785706.tcloudbaseapp.com" \
+  -H "Origin: https://app.legoapi.cn" \
   -H "Access-Control-Request-Method: POST" \
   https://api.legoapi.cn/api/auth/login
 ```
@@ -33,7 +33,7 @@ curl -i -X OPTIONS \
 
 ```bash
 curl -i -X POST https://api.legoapi.cn/api/auth/login \
-  -H "Origin: https://lego-87-3galps7s9490f422-1399785706.tcloudbaseapp.com" \
+  -H "Origin: https://app.legoapi.cn" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   --data "username=legolas&password=021271"
 ```
@@ -44,7 +44,7 @@ curl -i -X POST https://api.legoapi.cn/api/auth/login \
 
 1. 打开页面：
 ```
-https://lego-87-3galps7s9490f422-1399785706.tcloudbaseapp.com/#/login
+https://app.legoapi.cn/#/login
 ```
 2. 登录后在 DevTools → Network → `login`  
    确认：

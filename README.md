@@ -82,6 +82,16 @@ npm run dev
 
 首屏登录页支持注册/登录，登录后进入首页即可开始打卡。
 
+### 2.3 海外入口
+
+当前海外前端入口：`https://app.legoapi.cn`  
+后端 API：`https://api.legoapi.cn/api`
+
+### 2.4 国内入口（腾讯云默认域名）
+
+当前国内前端入口：`https://lego-87-3galps7s9490f422-1399785706.ap-shanghai.app.tcloudbase.com`  
+后端 API：`https://api.legoapi.cn/api`
+
 ---
 
 ## 3. 使用说明（功能总览）
