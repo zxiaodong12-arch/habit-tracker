@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `habits` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '习惯ID（主键）',
   `user_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '用户ID（预留，支持多用户）',
   `name` VARCHAR(100) NOT NULL COMMENT '习惯名称',
-  `emoji` VARCHAR(10) DEFAULT '📝' COMMENT '习惯图标（Emoji）',
+  `emoji` VARCHAR(10) DEFAULT NULL COMMENT '习惯图标（Emoji）',
   `color` VARCHAR(20) DEFAULT '#10b981' COMMENT '习惯主题色（十六进制）',
   `archived` TINYINT(1) DEFAULT 0 COMMENT '是否已归档（0=否，1=是）',
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
