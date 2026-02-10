@@ -125,14 +125,20 @@ npm run dev
 
 ---
 
-## 4. 技术栈概览
+## 4. 运维与备份
+
+- 数据库备份与恢复说明：`/System/Volumes/Data/data/RD/habit-tracker/docs/backup-restore.md`
+
+---
+
+## 5. 技术栈概览
 
 - 前端：Vue 3、Vite、Vue Router、Pinia、Axios、响应式 CSS
 - 后端：PHP 8 + ThinkPHP 6、MySQL、Nginx / PHP-FPM
 
 ---
 
-## 5. 其他
+## 6. 其他
 
 - 前端构建产物默认输出到项目根目录的 `dist/`（静态托管时可直接部署该目录内容）。
 - 本项目遵循极简原则，不内置推送、排行榜等复杂功能，专注于高质量的打卡体验和数据可视化。
